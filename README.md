@@ -1,2 +1,2 @@
-# my_project
+# Read me file
 under construction ...
