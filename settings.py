@@ -11,7 +11,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SESSION_CONFIGS = [
     dict(
-        name='my_project',
+        name='mobilityTCS_experiment',
         app_sequence=[
             'app1_intro',
             'app2_testI', 'app3_testII',

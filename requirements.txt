@@ -1,7 +1,6 @@
 # oTree-may-not-overwrite-this-file
 otree==5.11.1
-psycopg2>=2.8.4
-sentry-sdk>=0.7.9
+psycopg2>=2.9.12
+sentry-sdk>=2.66.1
 numpy==2.2.6
-pandas==1.5.3
-
+pandas==2.3.3
