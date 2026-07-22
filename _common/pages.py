@@ -373,7 +373,7 @@ def results_vars_for_template(player, NUM_ROUNDS, TRANSACTION_COSTS, INITIAL_PRI
         token_price = INITIAL_PRICE
     transaction_costs = TRANSACTION_COSTS if remaining_token > 0 else 0
     sellback_earnings = clean_zero(remaining_token * token_price - transaction_costs)
-    if current_phase == 'II': 
+    if current_phase == 'testI': 
         sellback_earnings = clean_zero(remaining_token * token_price)
 
     # Update player's budget and token count after sellback
