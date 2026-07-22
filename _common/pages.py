@@ -90,12 +90,14 @@ def choice_vars_for_template(player, NUM_ROUNDS, current_phase = 'V', choice='co
 
 #************************************
 # before_next_page
-def choice_before_next_page(player, NUM_ROUNDS, timeout_happened, current_phase='V', reduced=False, choice='commute', distance=False, AUTO_FEE=10):
+def choice_before_next_page(player, NUM_ROUNDS, timeout_happened, current_phase='V', reduced=False, choice='commute', distance=False, AUTO_FEE=10, vary=False):
     # === Basic Setup ===
     player.participant.vars['token_price_history'].append(player.group.token_price)
     trips = player.participant.vars['all_trips']
     trip_index = (player.round_number - 1) % len(trips)
     trip = trips[trip_index]
+    week = (player.round_number - 1) // len(trips) + 1
+    day_in_week = trip_index + 1
 
     if choice != 'no_commute':
     # === Determine Default Mode Choice ===
@@ -113,7 +115,12 @@ def choice_before_next_page(player, NUM_ROUNDS, timeout_happened, current_phase=
         cost = 0.0
         token_needed = 0
     else:
-        cost = float(trip[f'tour_total_cost_{mode}'])
+        base_cost = float(trip[f'tour_total_cost_{mode}'])
+        if vary:
+            vary_cost = trip.get(f'tour_total_cost_{mode}_vary_{current_phase}_{week}_{day_in_week}')
+            cost = float(vary_cost) if vary_cost is not None and not pd.isna(vary_cost) else base_cost
+        else:
+            cost = base_cost
         token_needed = int(trip[f'tour_total_token_{mode}'])
 
     # === Handle Token Purchase if Needed ===

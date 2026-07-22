@@ -186,7 +186,7 @@ class Choice(Page):
     def before_next_page(player, timeout_happened):
         if timeout_happened:
             player.timeout_occurred_choice = True
-        return choice_before_next_page(player, C.NUM_ROUNDS, timeout_happened, current_phase = 'II', reduced=True, AUTO_FEE=C.AUTO_FEE)
+        return choice_before_next_page(player, C.NUM_ROUNDS, timeout_happened, current_phase = 'II', reduced=True, AUTO_FEE=C.AUTO_FEE, vary=True)
 
 
 class NoCommute(Page):
