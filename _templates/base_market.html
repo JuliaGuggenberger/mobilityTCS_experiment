@@ -10,8 +10,8 @@
                         1. Each buy or sell transaction incurs a {{ transaction_costs }} DKK fee<br>
                         2. You cannot buy tokens if you don't have enough money<br>
                         3. You cannot sell more tokens than you currently own<br>
-                        4. You cannot buy more tokens than you can use during the week<br>
-                        5. You cannot buy more tokens than you can use the next day<br>
+                        4. Maximum tokens you can buy on ONE DAY<br>
+                        5. You cannot buy more tokens than you can use during the week<br>
                         6. The Token price increases or decreases by {{ price_change_rate }} DKK for each token bought or sold across all participants
                     </span>
                 </span>
@@ -60,7 +60,7 @@
             </form>
 
             <p class="mt-20" style="font-size: 0.9em; color: var(--summary-label-color)">
-                Every time someone buys or sells a token, it changes the price for the next day.
+                Every time someone buys or sells tokens, it changes the price for the next day.
             </p>
         </div>
     </div>
@@ -158,6 +158,7 @@ let totalTokenSold= 0;
 const currentBudget= parseFloat("{{ budget }}") || 0;
 const currentToken= parseInt("{{ token }}") || 0;
 const maxTokenAllowed= parseInt("{{ max_token }}") || 0;
+const maxTokenPerBuy= parseInt("{{ absolute_max_token }}") || 0;
 const minTokenNeeded= parseInt("{{ min_required_token }}");
 
 console.log("currentToken", currentToken);
@@ -189,6 +190,13 @@ function submitBuy() {
     const futureTokenHoldings = currentToken + totalTokenPurchased + value - totalTokenSold;
     if (availableBudget < 0) {
         errorDiv.innerHTML = `<strong>Not enough money.</strong> This trade would exceed your available budget.`;
+        errorDiv.style.display = "block";
+        input.value = '';
+        return;
+    }
+    
+    if (futureBuyTotal > maxTokenPerBuy) {
+        errorDiv.textContent = `You can buy at most ${maxTokenPerBuy} Token in a single day.`;
         errorDiv.style.display = "block";
         input.value = '';
         return;
@@ -256,6 +264,9 @@ const rounds= marketData.labels;
 
 const darkTeal = getComputedStyle(document.body).getPropertyValue('--dark-teal');
 const lightTeal = getComputedStyle(document.body).getPropertyValue('--light-teal');
+let maxPrice = Math.max(...tokenPrices);
+maxPrice = maxPrice + 10;
+
 new Chart(ctx, {
     type: 'line',
     data: {
@@ -273,10 +284,11 @@ new Chart(ctx, {
     options: {
         responsive: true,
         scales: {
+            
             y: {
                 beginAtZero: false,
                 min: 0,
-                max: 50,
+                max: maxPrice,
                 ticks: {
                     maxTicksLimit: 10, // Only show up to 4 tick lines
                     // You can also round or format here:
@@ -287,9 +299,7 @@ new Chart(ctx, {
             }
         },
         plugins: {
-            legend: {
-                display: false
-            },
+            legend: { display: false },
             tooltip: {
                 callbacks: { label: context=> `DKK ${context.parsed.y.toFixed(2)}` }
             }
