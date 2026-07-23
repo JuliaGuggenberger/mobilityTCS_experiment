@@ -21,6 +21,8 @@ behavior rather than abstract scenarios.
 **example/dummy data only**. The actual choice sets and maps are generated per
 participant from the pre-survey and travel diary responses.
 
+## How to set up
+
 ### 1. Clone the repository
 ```bash
 git clone https://github.com/JuliaGuggenberger/mobilityTCS_experiment.git
