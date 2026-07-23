@@ -319,10 +319,6 @@ def market_before_next_page(player, NUM_ROUNDS, TRANSACTION_COSTS, PRICE_CHANGE_
     player.budget -= transaction_costs
     player.token += net_token
 
-    # === Token Price Update ===
-    player.group.token_price += (net_token+pending_token) * PRICE_CHANGE_RATE
-    player.group.token_price = min(100.0, max(1.0, clean_zero(player.group.token_price)))
-
     # === Setup Next Round's Budget and Token ===
     if player.round_number < NUM_ROUNDS:
         next_p = player.in_round(player.round_number + 1)
@@ -341,10 +337,6 @@ def market_before_next_page(player, NUM_ROUNDS, TRANSACTION_COSTS, PRICE_CHANGE_
         else:
             next_p.budget = player.budget
             next_p.token = player.token
-        
-        next_p.group.token_price = player.group.token_price
-
-    player.participant.vars['token_price_next_round'] = player.group.token_price
 
     player.participant.vars['pending_token_purchases'] = 0
     player.participant.vars['pending_token_sales'] = 0

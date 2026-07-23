@@ -70,6 +70,23 @@ class ConditionalChoiceOrNoCommuteWaitPage(WaitPage):
     def after_all_players_arrive(group):
         pass  # optional synchronization logic
 
+class MarketWaitPage(WaitPage):
+    @staticmethod
+    def after_all_players_arrive(group):
+        players = group.get_players()
+        total_net = sum(p.token_purchased - p.token_sold for p in players)
+        total_pending = sum(
+            p.participant.vars.get('pending_token_purchases', 0) -
+            p.participant.vars.get('pending_token_sales', 0)
+            for p in players
+        )
+        new_price = group.token_price + (total_net + total_pending) * C.PRICE_CHANGE_RATE
+        group.token_price = min(100.0, max(1.0, clean_zero(new_price)))
+        for p in players:
+            p.participant.vars['pending_token_purchases'] = 0
+            p.participant.vars['pending_token_sales'] = 0
+            p.participant.vars['token_price_next_round'] = group.token_price
+
 # ======== Instruction ========
 class Instruction(Page):
     form_model = 'player'
@@ -237,4 +254,4 @@ class Results(Page):
     def vars_for_template(player):
         return results_vars_for_template(player, C.NUM_ROUNDS, C.TRANSACTION_COSTS, C.INITIAL_PRICE, reduced=True, current_phase='II')
 
-page_sequence = [SyncWaitPage, Instruction, SyncWaitPage, WeekPreview, SyncWaitPage, Market, SyncWaitPage, NoCommute, Choice, SyncWaitPage, Results]
+page_sequence = [SyncWaitPage, Instruction, SyncWaitPage, WeekPreview, SyncWaitPage, Market, MarketWaitPage, NoCommute, Choice, SyncWaitPage, Results]
