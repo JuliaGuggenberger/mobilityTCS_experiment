@@ -23,6 +23,7 @@ class Subsession(BaseSubsession):
             
 class Group(BaseGroup):
     token_price = models.FloatField(initial=C.INITIAL_PRICE)
+    token_price_after_market = models.FloatField()
 
 class Player(BasePlayer):
     choice = models.StringField()

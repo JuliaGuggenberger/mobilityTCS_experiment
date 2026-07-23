@@ -31,6 +31,7 @@ class Subsession(BaseSubsession):
             
 class Group(BaseGroup):
     token_price = models.FloatField(initial=C.INITIAL_PRICE)
+    token_price_after_market = models.FloatField()
 
 class Player(BasePlayer):
     choice = models.StringField()
@@ -82,6 +83,7 @@ class MarketWaitPage(WaitPage):
         )
         new_price = group.token_price + (total_net + total_pending) * C.PRICE_CHANGE_RATE
         group.token_price = min(100.0, max(1.0, clean_zero(new_price)))
+        group.token_price_after_market = group.token_price
         for p in players:
             p.participant.vars['pending_token_purchases'] = 0
             p.participant.vars['pending_token_sales'] = 0
