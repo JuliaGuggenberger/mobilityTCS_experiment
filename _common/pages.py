@@ -10,7 +10,6 @@ import pandas as pd
 from _common.functions import *
 import ast
 
-
 #***********************************************************************************************
 # Choice
 #***********************************************************************************************
@@ -251,11 +250,11 @@ def market_vars_for_template(player, DAY_ABBREVIATIONS, NUM_ROUNDS, TRANSACTION_
     )
 
     # === Remaining Max Token for This Week ===
-    weekly_trips = trips[:len(trips)]
+    remaining_trips = trips[trip_index:]
     remaining_max_token = sum(
-        trip.get('tour_total_token_max', 0)
-        for trip in weekly_trips
-        if isinstance(trip.get('tour_total_token_max', 0), (int, float))
+        t.get('tour_total_token_max', 0)
+        for t in remaining_trips
+        if isinstance(t.get('tour_total_token_max', 0), (int, float))
     )
 
     absolute_max_token = max(
@@ -281,7 +280,7 @@ def market_vars_for_template(player, DAY_ABBREVIATIONS, NUM_ROUNDS, TRANSACTION_
         budget=clean_zero(player.budget),
         day_in_week=day_in_week,
         default_mode=trip['mode'],
-        max_token=remaining_max_token-token_substract,
+        max_token=int(remaining_max_token),
         max_week=max_week,
         min_required_token=0 if pd.isna(min_required_token) else int(min_required_token),
         modes=modes,
