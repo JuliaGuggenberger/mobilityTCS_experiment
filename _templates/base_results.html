@@ -16,7 +16,7 @@
         <span style="color: var(--summary-label-color);">{% if token_sold == 1 %}Token{% else %}Tokens{% endif %} × </span>
         <span class="text-bold-orange">{{ token_price }}</span>
         <span style="color: var(--summary-label-color);"> DKK</span>
-        {% if current_phase not in ('testI', 'testII') %}
+        {% if current_phase not in ('testI') %}
             <span style="color: var(--summary-label-color);"> - </span>
             <span class="text-bold-orange">{{ transaction_costs }}</span>
             <span style="color: var(--summary-label-color);"> DKK </span>
