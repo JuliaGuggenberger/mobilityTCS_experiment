@@ -364,23 +364,6 @@ def results_vars_for_template(player, NUM_ROUNDS, TRANSACTION_COSTS, INITIAL_PRI
     next_week = current_week + 1
     PHASE_ORDER = ['I','II','III']
 
-    # # === Retrieve Data ===
-    # sellback_earnings = 0
-    # # === Sell Remaining Tokens ===
-    # remaining_token = player.token
-    # token_price = player.group.token_price
-    # if token_price is None:
-    #     token_price = INITIAL_PRICE
-    # transaction_costs = TRANSACTION_COSTS if remaining_token > 0 else 0
-    # sellback_earnings = clean_zero(remaining_token * token_price - transaction_costs)
-    # if current_phase == 'testI': 
-    #     sellback_earnings = clean_zero(remaining_token * token_price)
-
-    # # Update player's budget and token count after sellback
-    # player.budget += sellback_earnings
-    # player.token = 0
-    # player.participant.vars['pending_token_sales'] = player.participant.vars.get('pending_token_sales', 0) + remaining_token
-
     # === Retrieve Data ===
     sellback_key = f'sellback_{current_phase}_round_{player.round_number}'
     cached_sellback = player.participant.vars.get(sellback_key)

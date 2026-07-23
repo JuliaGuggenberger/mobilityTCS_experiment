@@ -81,7 +81,7 @@ class Choice(Page):
     
     @staticmethod
     def before_next_page(player, timeout_happened):
-        return choice_before_next_page(player, C.NUM_ROUNDS, timeout_happened, current_phase = 'testI')
+        return choice_before_next_page(player, C.NUM_ROUNDS, timeout_happened, current_phase = 'testI', AUTO_FEE=C.AUTO_FEE)
 
 # ======== NoCommute ========
 class NoCommute(Page):
@@ -98,7 +98,7 @@ class NoCommute(Page):
     
     @staticmethod
     def before_next_page(player, timeout_happened):
-        return choice_before_next_page(player, C.NUM_ROUNDS, timeout_happened, current_phase = 'testI', choice='no_commute', AUTO_FEE=C.AUTO_FEE)
+        return choice_before_next_page(player, C.NUM_ROUNDS, timeout_happened, current_phase = 'testI', choice='no_commute')
 
 # ======== Results ========
 class Results(Page):
