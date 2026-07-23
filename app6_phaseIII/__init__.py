@@ -244,6 +244,6 @@ class Results(Page):
 
     @staticmethod
     def vars_for_template(player):
-        return results_vars_for_template(player, C.NUM_ROUNDS, C.TRANSACTION_COSTS, C.INITIAL_PRICE, distance=True, current_phase='III')
+        return results_vars_for_template(player, C.NUM_ROUNDS, C.TRANSACTION_COSTS, C.INITIAL_PRICE, distance=True, current_phase='III', PRICE_CHANGE_RATE=C.PRICE_CHANGE_RATE)
 
 page_sequence = [SyncWaitPage, Instruction, SyncWaitPage, WeekPreview, SyncWaitPage, Market, MarketWaitPage, NoCommute, Choice, SyncWaitPage, Results]

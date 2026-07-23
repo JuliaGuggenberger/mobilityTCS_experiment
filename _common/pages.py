@@ -346,7 +346,7 @@ def market_before_next_page(player, NUM_ROUNDS, TRANSACTION_COSTS, PRICE_CHANGE_
 # Results
 #***********************************************************************************************
 # vars_for_template
-def results_vars_for_template(player, NUM_ROUNDS, TRANSACTION_COSTS, INITIAL_PRICE, reduced=False, current_phase = 'V', distance=False):
+def results_vars_for_template(player, NUM_ROUNDS, TRANSACTION_COSTS, INITIAL_PRICE, reduced=False, current_phase = 'V', distance=False, PRICE_CHANGE_RATE=None):
     # === Setup Week and Round Info ===
     trips = player.participant.vars['all_trips']
     trip_choices = player.participant.vars['trip_choices']
@@ -388,6 +388,25 @@ def results_vars_for_template(player, NUM_ROUNDS, TRANSACTION_COSTS, INITIAL_PRI
             'transaction_costs': transaction_costs,
             'token_price': token_price,
         }
+        # Immediate price update — only when PRICE_CHANGE_RATE is passed in (Phase I/II/III)
+        if PRICE_CHANGE_RATE is not None:
+            pending_purchases = player.participant.vars.get('pending_token_purchases', 0)
+            pending_sales = player.participant.vars.get('pending_token_sales', 0)
+            pending_net = pending_purchases - pending_sales
+
+            updated_price = token_price + pending_net * PRICE_CHANGE_RATE
+            updated_price = min(100.0, max(1.0, clean_zero(updated_price)))
+
+            player.group.token_price = updated_price
+            token_price = updated_price
+
+            player.participant.vars['pending_token_purchases'] = 0
+            player.participant.vars['pending_token_sales'] = 0
+            player.participant.vars['token_price_next_round'] = updated_price
+
+            if player.round_number < NUM_ROUNDS:
+                next_p = player.in_round(player.round_number + 1)
+                next_p.group.token_price = updated_price
 
     # === Weekly Summary Calculation ===
     weekly_summary = []
