@@ -398,7 +398,6 @@ def results_vars_for_template(player, NUM_ROUNDS, TRANSACTION_COSTS, INITIAL_PRI
             updated_price = min(100.0, max(1.0, clean_zero(updated_price)))
 
             player.group.token_price = updated_price
-            token_price = updated_price
 
             player.participant.vars['pending_token_purchases'] = 0
             player.participant.vars['pending_token_sales'] = 0
