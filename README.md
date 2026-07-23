@@ -1,8 +1,23 @@
-# Mobility TCS Experiment
+# Mobility TCS Lab Experiment
 
-An oTree experiment.
+If you use this code, please cite: _Guggenberger, Julia Anna and Seshadri, Ravi and Ciuffo, Biagio and Azevedo, Carlos Lima, Market Behavior in a Tradable Credit Scheme for Sustainable Mobility: Insights from a Lab Experiment. Available at SSRN: https://ssrn.com/abstract=6598859 or http://dx.doi.org/10.2139/ssrn.6598859_
 
-## Setup
+## About
+
+This repository contains the oTree implementation of a lab experiment studying
+market behavior in a digital Tradable Credit Scheme (TCS) for sustainable mobility.
+Participants make repeated daily commuting decisions (Travel Choice pages) and can
+trade tokens in a central credit market (Market page) across a sequence of test
+phases and three main phases (reduced allocation, cost variation, distance-based
+allocation). Choice sets are built from participants' own real commuting data
+(pre-survey + travel diary), so decisions reflect realistic, context-aware travel
+behavior rather than abstract scenarios.
+
+## Note on data
+
+`choice_set.csv` and the map files under `static/maps/` included here are
+**example/dummy data only**. The actual choice sets and maps are generated per
+participant from the pre-survey and travel diary responses.
 
 ### 1. Clone the repository
 ```bash
