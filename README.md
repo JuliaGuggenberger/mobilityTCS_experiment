@@ -1,6 +1,8 @@
 # Mobility TCS Lab Experiment
 
-If you use this code, please cite: _Guggenberger, Julia Anna and Seshadri, Ravi and Ciuffo, Biagio and Azevedo, Carlos Lima, Market Behavior in a Tradable Credit Scheme for Sustainable Mobility: Insights from a Lab Experiment. Available at SSRN: https://ssrn.com/abstract=6598859 or http://dx.doi.org/10.2139/ssrn.6598859_
+If you use this code, please cite: 
+
+_Guggenberger, Julia Anna and Seshadri, Ravi and Ciuffo, Biagio and Azevedo, Carlos Lima, Market Behavior in a Tradable Credit Scheme for Sustainable Mobility: Insights from a Lab Experiment. Available at SSRN: https://ssrn.com/abstract=6598859 or http://dx.doi.org/10.2139/ssrn.6598859_
 
 ## About
 
